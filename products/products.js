@@ -1,19 +1,33 @@
+/* eslint-disable camelcase */
+/* eslint-disable strict */
 'use strict';
 
-const productsSchema = require('./products-schema.js')
+
+const ProductsSchema = require('./products-schema.js');
 
 class Products {
-    constructor() {
+
+  get(_id) {
+    if (_id) {
+      return ProductsSchema.findOne({ _id });
+    } else {
+      return ProductsSchema.find({});
     }
+  }
 
-    get() { }
+  create(record) {
+    let newRecord = new ProductsSchema(record);
+    return newRecord.save();
+  }
 
-    create() { }
+  update(_id, record) {
+    return ProductsSchema.findByIdAndUpdate(_id, record, { new: true });
+  }
 
-    update() { }
-
-    delete() { }
+  delete(_id) {
+    return ProductsSchema.findByIdAndDelete(_id);
+  }
 
 }
 
-module.exports = Products
+module.exports = Products;
